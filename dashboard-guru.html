@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Guru BK</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 48px auto 32px auto;
+            background: #fff;
+            border-radius: 32px;
+            box-shadow: 0 8px 40px 0 #6366f133;
+            padding: 40px 32px 32px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 36px;
+        }
+        .dashboard-header img {
+            width: 120px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0);}
+            50% { transform: translateY(-18px);}
+        }
+        .dashboard-header h1 {
+            color: #2b4c7e;
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .guru-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .guru-avatar {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2.5px solid #6366f1;
+            box-shadow: 0 2px 8px #6366f133;
+        }
+        .dashboard-stats {
+            display: flex;
+            gap: 24px;
+            margin: 32px 0 36px 0;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: linear-gradient(120deg, #6366f1 60%, #2b4c7e 100%);
+            color: #fff;
+            border-radius: 18px;
+            box-shadow: 0 2px 16px #6366f122;
+            padding: 24px 32px;
+            min-width: 180px;
+            text-align: center;
+            animation: popIn 1s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 40px rgba(99,102,241,0.15);
+        }
+        .stat-icon {
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            animation: countUp 1.2s;
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.8);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        .section-title {
+            color: #6366f1;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 36px 0 18px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title svg {
+            width: 32px;
+            height: 32px;
+        }
+        .story-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-bottom: 40px;
+            justify-content: flex-start;
+        }
+        .story-card {
+            background: linear-gradient(120deg, #f1f5f9 70%, #e0e7ef 100%);
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(99,102,241,0.10);
+            padding: 28px 24px 20px 24px;
+            min-width: 320px;
+            max-width: 370px;
+            flex: 1 1 340px;
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: popIn 1s;
+            overflow: hidden;
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(40px);}
+            to { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        .story-type {
+            font-size: 0.98rem;
+            color: #fff;
+            background: linear-gradient(90deg, #6366f1 60%, #2b4c7e 100%);
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px #6366f122;
+            animation: fadeIn 1.2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0;}
+            to { opacity: 1;}
+        }
+        .story-author {
+            color: #2b4c7e;
+            font-weight: 700;
+            margin-bottom: 2px;
+            font-size: 1.08rem;
+        }
+        .story-date {
+            color: #94a3b8;
+            font-size: 0.98rem;
+            margin-bottom: 10px;
+        }
+        .story-content {
+            color: #334155;
+            margin-bottom: 16px;
+            font-size: 1.08rem;
+            min-height: 60px;
+            animation: fadeIn 1.2s;
+        }
+        .story-card .icon-bg {
+            position: absolute;
+            top: -18px;
+            right: -18px;
+            opacity: 0.07;
+            width: 90px;
+            height: 90px;
+            z-index: 0;
+        }
+        .story-card .comments-title {
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+        .story-card ul {
+            margin: 0 0 0 12px;
+            padding: 0;
+            list-style: disc;
+        }
+        .story-card li {
+            background: #e0e7ef;
+            border-radius: 8px;
+            padding: 7px 12px;
+            margin-bottom: 6px;
+            font-size: 0.98rem;
+            color: #2b4c7e;
+            animation: fadeIn 1.2s;
+        }
+        .no-story {
+            color: #94a3b8;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .dashboard-container { padding: 18px 4vw; }
+            .dashboard-header { flex-direction: column; gap: 12px;}
+            .story-list { flex-direction: column; gap: 18px;}
+            .story-card { min-width: 90vw; max-width: 98vw;}
+        }
+        @media (max-width: 600px) {
+            .dashboard-header h1 { font-size: 1.2rem;}
+            .section-title { font-size: 1.1rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <img src="https://undraw.co/api/illustrations/teacher.svg" alt="Guru BK" />
+            <div>
+                <h1>Dashboard Guru BK</h1>
+                <div class="guru-profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profil Guru" class="guru-avatar">
+                    <span>Selamat datang, <b>Pak Budi</b></span>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#6366f1" stroke-width="2" d="M3 12l2-2 4 4 8-8 2 2-10 10z"/></svg></div>
+                <div class="stat-value" id="stat-privat">0</div>
+                <div class="stat-label">Cerita Privat</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#2b4c7e" stroke-width="2" d="M3 12l2-2 4 4 8-8 2 2-10 10z"/></svg></div>
+                <div class="stat-value" id="stat-publik">0</div>
+                <div class="stat-label">Cerita Publik</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#f59e0b" stroke-width="2" d="M3 12l2-2 4 4 8-8 2 2-10 10z"/></svg></div>
+                <div class="stat-value" id="stat-komentar">0</div>
+                <div class="stat-label">Total Komentar</div>
+            </div>
+        </div>
+        <div>
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#6366f1"/><path d="M8 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Cerita Privat Siswa
+            </div>
+            <div id="private-stories" class="story-list"></div>
+        </div>
+        <div>
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="8" fill="#2b4c7e"/><path d="M8 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Cerita Publik Siswa
+            </div>
+            <div id="public-stories" class="story-list"></div>
+        </div>
+    </div>
+    <!-- Animasi SVG background -->
+    <svg style="position:fixed;top:-80px;right:-80px;z-index:-1;opacity:0.13;" width="320" height="320" viewBox="0 0 320 320"><circle cx="160" cy="160" r="160" fill="#6366f1"/></svg>
+    <svg style="position:fixed;bottom:-60px;left:-60px;z-index:-1;opacity:0.09;" width="220" height="220" viewBox="0 0 220 220"><circle cx="110" cy="110" r="110" fill="#2b4c7e"/></svg>
+    <script>
+    const API_URL = 'http://localhost/bimbingan-konseling-online/backend/stories.php';
+
+    async function fetchStories(type) {
+        const res = await fetch(type === 'private' ? API_URL + '?type=private' : API_URL);
+        return await res.json();
+    }
+
+    function renderStoryList(stories, containerId, icon) {
+        const container = document.getElementById(containerId);
+        if (!stories.length) {
+            container.innerHTML = '<div class="no-story">Belum ada cerita.</div>';
+            return;
+        }
+        container.innerHTML = '';
+        stories.forEach(story => {
+            const div = document.createElement('div');
+            div.className = 'story-card';
+            div.innerHTML = `
+                <span class="story-type">${story.type === 'private' ? 'Privat' : 'Publik'}</span>
+                <span class="icon-bg">${icon}</span>
+                <div class="story-author"><b>${story.name || 'Anonim'}</b> <span class="story-date">(${story.date})</span></div>
+                <div class="story-content">${story.content}</div>
+                ${story.comments && story.comments.length ? `<div class="comments-title">Komentar:</div><ul>${story.comments.map(c=>`<li>${c}</li>`).join('')}</ul>` : ''}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    async function loadDashboard() {
+        const [privates, publics] = await Promise.all([
+            fetchStories('private'),
+            fetchStories('public')
+        ]);
+        // Ikon ilustrasi untuk card
+        const iconPrivate = `<svg width="80" height="80" fill="none" viewBox="0 0 80 80"><rect width="80" height="80" rx="24" fill="#6366f1"/><path d="M40 50c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z" fill="#fff" opacity=".2"/><path d="M40 36a4 4 0 110 8 4 4 0 010-8z" fill="#fff" opacity=".5"/></svg>`;
+        const iconPublic = `<svg width="80" height="80" fill="none" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#2b4c7e"/><path d="M40 30a10 10 0 100 20 10 10 0 000-20z" fill="#fff" opacity=".2"/><path d="M40 36a4 4 0 110 8 4 4 0 010-8z" fill="#fff" opacity=".5"/></svg>`;
+        renderStoryList(privates, 'private-stories', iconPrivate);
+        renderStoryList(publics, 'public-stories', iconPublic);
+    }
+
+    loadDashboard();
+    </script>
+</body>
+</html>
