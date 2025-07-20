@@ -162,7 +162,7 @@ $user = $_SESSION['user'];
     <section id="contact" class="reveal alt-bg">
         <div class="container contact-flex">
             <div class="contact-img">
-                <img src="https://undraw.co/api/illustrations/consulting.svg" alt="Contact Ilustrasi" />
+                <img src="images/ngechat.png" alt="Contact Ilustrasi" />
             </div>
             <div>
                 <h2>Kontak Kami</h2>
