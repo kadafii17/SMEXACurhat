@@ -184,6 +184,9 @@ $user = $_SESSION['user'];
     <!-- Contact -->
     <section id="contact" class="reveal alt-bg">
         <div class="container contact-flex">
+            <div class="contact-img">
+                <img src="images/ngechat.png" alt="Contact Ilustrasi" />
+            </div>
             <div>
                 <h2>Kontak Kami</h2>
                 <form id="contact-form">
