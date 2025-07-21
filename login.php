@@ -1,27 +1,43 @@
 <?php
+
 session_start();
 
-// Demo user (username => [password, role])
-$users = [
-    'guru1' => ['password' => 'gurubk123', 'role' => 'guru'],
-    'siswa1' => ['password' => 'siswa123', 'role' => 'siswa'],
-    'siswa2' => ['password' => 'siswa456', 'role' => 'siswa']
-];
+// Koneksi ke database
+$host = 'localhost';
+$db = 'smexa_curhat'; // Ganti dengan nama database Anda
+$user = 'root'; // Ganti jika user database Anda berbeda
+$pass = '';
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die('Koneksi database gagal: ' . $conn->connect_error);
+}
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
-    if (isset($users[$username]) && $users[$username]['password'] === $password) {
-        $_SESSION['user'] = [
-            'username' => $username,
-            'role' => $users[$username]['role']
-        ];
-        header('Location: index.php');
-        exit;
+    // Query user dari database
+    $stmt = $conn->prepare('SELECT username, password, role FROM users WHERE username = ? LIMIT 1');
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        // Jika password di database sudah di-hash, gunakan password_verify
+        // if (password_verify($password, $row['password'])) {
+        if ($password === $row['password']) { // Ganti dengan password_verify jika sudah hash
+            $_SESSION['user'] = [
+                'username' => $row['username'],
+                'role' => $row['role']
+            ];
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = 'Username atau password salah!';
+        }
     } else {
         $error = 'Username atau password salah!';
     }
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>

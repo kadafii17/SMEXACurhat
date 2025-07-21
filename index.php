@@ -43,7 +43,30 @@ $user = $_SESSION['user'];
             <div class="hero-text">
                 <h2>Selamat Datang di <span class="highlight">SMEXACurhat</span></h2>
                 <p>Bimbingan konseling modern untuk siswa Smexa: solusi belajar, magang, karir, dan kesehatan mental.</p>
-                <a href="#contact" class="btn">Hubungi Konselor</a>
+                <button type="button" id="open-guru-modal" class="btn">Hubungi Konselor</button>
+    <!-- Modal Pilih Guru BK -->
+    <div id="guru-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:18px; padding:32px 24px 24px 24px; min-width:320px; max-width:90vw; box-shadow:0 8px 40px #6366f144; position:relative;">
+            <span id="close-guru-modal" style="position:absolute; top:12px; right:18px; font-size:1.8rem; color:#6366f1; cursor:pointer; font-weight:bold;">&times;</span>
+            <h2 style="text-align:center; color:#6366f1; margin-bottom:18px;">Pilih Guru BK</h2>
+            <div style="display:flex; flex-wrap:wrap; gap:18px; justify-content:center;">
+                <!-- Daftar guru statis, bisa diubah ke dinamis dari database -->
+                <div class="guru-card" data-guru="Bu Sari" style="cursor:pointer; text-align:center; padding:12px 8px; border-radius:12px; border:1.5px solid #c7d2fe; background:#f8fafc; width:120px; transition:box-shadow 0.2s;">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Bu Sari" style="width:64px; height:64px; border-radius:50%; object-fit:cover; margin-bottom:8px;">
+                    <div style="font-weight:600; color:#2b4c7e;">Bu Sari</div>
+                </div>
+                <div class="guru-card" data-guru="Pak Budi" style="cursor:pointer; text-align:center; padding:12px 8px; border-radius:12px; border:1.5px solid #c7d2fe; background:#f8fafc; width:120px; transition:box-shadow 0.2s;">
+                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Pak Budi" style="width:64px; height:64px; border-radius:50%; object-fit:cover; margin-bottom:8px;">
+                    <div style="font-weight:600; color:#2b4c7e;">Pak Budi</div>
+                </div>
+                <div class="guru-card" data-guru="Bu Lina" style="cursor:pointer; text-align:center; padding:12px 8px; border-radius:12px; border:1.5px solid #c7d2fe; background:#f8fafc; width:120px; transition:box-shadow 0.2s;">
+                    <img src="https://randomuser.me/api/portraits/women/46.jpg" alt="Bu Lina" style="width:64px; height:64px; border-radius:50%; object-fit:cover; margin-bottom:8px;">
+                    <div style="font-weight:600; color:#2b4c7e;">Bu Lina</div>
+                </div>
+            </div>
+            <div id="guru-terpilih" style="margin-top:18px; text-align:center; color:#16a34a; font-weight:600; display:none;">Guru terpilih: <span id="nama-guru-terpilih"></span></div>
+        </div>
+    </div>
             </div>
             <div class="hero-img">
                 <!-- Ilustrasi konseling dari unDraw -->
@@ -161,9 +184,6 @@ $user = $_SESSION['user'];
     <!-- Contact -->
     <section id="contact" class="reveal alt-bg">
         <div class="container contact-flex">
-            <div class="contact-img">
-                <img src="https://undraw.co/api/illustrations/consulting.svg" alt="Contact Ilustrasi" />
-            </div>
             <div>
                 <h2>Kontak Kami</h2>
                 <form id="contact-form">
@@ -311,6 +331,37 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('dark-toggle').onclick = function() {
     document.body.classList.toggle('dark-mode');
 };
+</script>
+<script>
+// Modal Guru BK
+document.addEventListener('DOMContentLoaded', function() {
+    const guruModal = document.getElementById('guru-modal');
+    const openGuruBtn = document.getElementById('open-guru-modal');
+    const closeGuruBtn = document.getElementById('close-guru-modal');
+    const guruTerpilih = document.getElementById('guru-terpilih');
+    const namaGuruTerpilih = document.getElementById('nama-guru-terpilih');
+
+    openGuruBtn.onclick = function() {
+        guruModal.style.display = 'flex';
+        guruTerpilih.style.display = 'none';
+    };
+    closeGuruBtn.onclick = function() {
+        guruModal.style.display = 'none';
+    };
+    window.onclick = function(e) {
+        if (e.target === guruModal) guruModal.style.display = 'none';
+    };
+    document.querySelectorAll('.guru-card').forEach(function(card) {
+        card.onclick = function() {
+            const nama = this.getAttribute('data-guru');
+            namaGuruTerpilih.textContent = nama;
+            guruTerpilih.style.display = 'block';
+            setTimeout(function() {
+                window.location.href = 'guru.php?nama=' + encodeURIComponent(nama);
+            }, 700);
+        };
+    });
+});
 </script>
 </body>
 </html>
